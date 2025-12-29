@@ -5,41 +5,39 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { NavigationContainer } from "@react-navigation/native";
+import { View, Text } from "react-native";
+import "./global.css";
+import Home from "./src/Home";
+import Controller from "./src/Controller";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { configureReanimatedLogger, ReanimatedLogLevel } from "react-native-reanimated";
+
+const Stack = createNativeStackNavigator();
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false,
+});
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Controller" component={Controller} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+// function App() {
+//   return (
+//     <View className="flex-1 items-center justify-center bg-white">
+//       <Text className="text-xl font-bold text-blue-500">
+//         Welcome to Nativewind!
+//       </Text>
+//     </View>
+//   );
+// }
 
 export default App;
