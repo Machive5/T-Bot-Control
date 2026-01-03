@@ -10,7 +10,9 @@ module.exports = {
     extend: {
       colors: {
         primary: "#252525",
-        secondary: "#D9D9D9"
+        secondary: "#D9D9D9",
+        success: "#10B981",
+        failed: "#EF4444",
       },
       fontFamily:{
         sans: ["Helvetica", "Arial", "sans-serif"],
