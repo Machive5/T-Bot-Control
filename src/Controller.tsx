@@ -17,6 +17,7 @@ const Controller = () => {
         Orientation.lockToLandscape();
         return () => {
             Orientation.lockToPortrait();
+            UDPCom.disconnect();
         };
     }, []);
 
@@ -33,7 +34,7 @@ const Controller = () => {
 
     const disconnect = () => {
         UDPCom.disconnect();
-        navigation.navigate('Home');
+        navigation.replace("Home");
     };
 
     return (
@@ -42,12 +43,12 @@ const Controller = () => {
                 <View className="w-fit h-fit flex flex-col items-start justify-center gap-4">
                     <Text className="text-white text-2xl font-semibold">T-BOT Control</Text>
                     <View className="w-fit h-fit flex flex-row items-center justify-center gap-2">
-                        <View className="w-4 h-4 bg-green-500 rounded-full relative" />
+                        <View className="w-4 h-4 bg-success rounded-full relative" />
                         <Animated.View style={[{
                             animationName: ping,
                             animationDuration: '1000ms',
                             animationIterationCount: 'infinite',
-                        }]} className="w-4 h-4 bg-green-500 rounded-full absolute left-0" />
+                        }]} className="w-4 h-4 bg-success rounded-full absolute left-0" />
                         <Text className="text-white text-sm font-medium">Connected</Text>
                     </View>
                 </View>

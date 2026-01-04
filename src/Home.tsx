@@ -38,21 +38,8 @@ const Home = () => {
         },
     };
 
-    UDPCom.onConnect(() => {
-        navigation.navigate("Controller");
-        setConnectionProgress(4);
-    });
-
-    UDPCom.onTimeOut(() => {
-        setConnectionProgress(2);
-    });
-
-    UDPCom.onError(() => {
-        setConnectionProgress(3);
-        navigation.navigate("Home");
-    });
-
     const onPress = () => {
+        console.log(connectionProgress);
         if (connectionProgress !== 1) {
             setConnectionProgress(1);
             UDPCom.connect();
@@ -64,6 +51,29 @@ const Home = () => {
 
     useEffect(() => {
         Orientation.lockToPortrait();
+
+        UDPCom.onConnect(() => {
+            navigation.replace("Controller");
+            setConnectionProgress(4);
+        });
+
+        UDPCom.onTimeOut(() => {
+            setConnectionProgress(2);
+        });
+
+        UDPCom.onError(() => {
+            setConnectionProgress(3);
+            navigation.replace("Home");
+        });
+
+        UDPCom.onDisconnect(() => {
+            setConnectionProgress(0);
+        });
+
+        return () => {
+            UDPCom.onError(() => { });
+        };
+
     }, []);
 
     return (
